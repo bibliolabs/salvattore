@@ -17,12 +17,35 @@ self.obtainGridSettings = function obtainGridSettings(element) {
   // returns the number of columns and the classes a column should have,
   // from computing the style of the ::before pseudo-element of the grid.
 
-  var computedStyle = global.getComputedStyle(element, ":before")
-    , content = computedStyle.getPropertyValue("content").slice(1, -1)
-    , matchResult = content.match(/^\s*(\d+)(?:\s?\.(.+))?\s*$/)
-    , numberOfColumns
-    , columnClasses
-  ;
+
+  //TODO: remove this if IE11 gets its act together
+  var computedStyle = global.getComputedStyle(element, ":before");
+  var contentProperty = computedStyle.getPropertyValue("content");
+
+  if (contentProperty === 'none') {
+    var stupidCopy = {};
+
+    for (var prop in computedStyle) {
+      stupidCopy[prop] = computedStyle[prop];
+    }
+
+    contentProperty = stupidCopy.content;
+  }
+
+  var content = contentProperty.slice(1, -1);
+  var matchResult = content.match(/^\s*(\d+)(?:\s?\.(.+))?\s*$/);
+  var numberOfColumns = 1;
+  var columnClasses = [];
+  //end stupid IE11 hack
+
+
+//  var computedStyle = global.getComputedStyle(element, ":before")
+//    , content = computedStyle.getPropertyValue("content").slice(1, -1)
+//    , matchResult = content.match(/^\s*(\d+)(?:\s?\.(.+))?\s*$/)
+//    , numberOfColumns
+//    , columnClasses
+//  ;
+
 
   if (matchResult) {
     numberOfColumns = matchResult[1];

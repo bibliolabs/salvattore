@@ -387,6 +387,14 @@ self.registerGrid = function registerGrid (grid) {
 };
 
 
+self.unregisterGrid = function unregisterGrid (grid) {
+  var index = grids.indexOf(grid);
+  if (index > -1) {
+    grids.splice(index, 1);
+  }
+};
+
+
 self.init = function init() {
   // adds required CSS rule to hide 'content' based
   // configuration.
@@ -409,6 +417,7 @@ return {
   appendElements: self.appendElements,
   prependElements: self.prependElements,
   registerGrid: self.registerGrid,
+  unregisterGrid: self.unregisterGrid,
   recreateColumns: self.recreateColumns,
   rescanMediaQueries: self.rescanMediaQueries,
   init: self.init,
@@ -417,6 +426,7 @@ return {
   append_elements: self.appendElements,
   prepend_elements: self.prependElements,
   register_grid: self.registerGrid,
+  unregister_grid: self.unregisterGrid,
   recreate_columns: self.recreateColumns,
   rescan_media_queries: self.rescanMediaQueries
 };

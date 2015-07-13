@@ -229,7 +229,12 @@ self.scanMediaQueries = function scanMediaQueries() {
 
   self.getStylesheets().forEach(function extract_rules(stylesheet) {
     Array.prototype.forEach.call(self.getCSSRules(stylesheet), function filter_by_column_selector(rule) {
-      if (rule.media && rule.cssRules && self.mediaRuleHasColumnsSelector(rule.cssRules)) {
+      // IE9 throws an error on rule.media when rule is CSSImportRule
+      if ((!(rule instanceof CSSImportRule)) &&
+          rule.media &&
+          rule.cssRules &&
+          self.mediaRuleHasColumnsSelector(rule.cssRules)) {
+
         newMediaRules.push(rule);
       }
     });
